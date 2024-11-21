@@ -7,7 +7,6 @@ import {Component, Host, h, getAssetPath} from '@stencil/core';
   shadow: false,
 })
 export class GraphqlPlaygroundComponent {
-
   static loadJavaScript(url: string, async = false) {
     return new Promise<void>((resolve, reject) => {
       if (!document.querySelector(`script[src="${url}"]`)) {
@@ -72,13 +71,13 @@ export class GraphqlPlaygroundComponent {
 
     const basePath = './assets/';
     try {
-      await GraphqlPlaygroundComponent.loadJavaScript(`${basePath}react.development.js`);
-      await GraphqlPlaygroundComponent.loadJavaScript(`${basePath}react-dom.development.js`);
-      await GraphqlPlaygroundComponent.loadJavaScript(`${basePath}graphiql.min.js`);
-      await GraphqlPlaygroundComponent.loadJavaScript(`${basePath}explorer.index.umd.js`);
+      await GraphqlPlaygroundComponent.loadJavaScript(getAssetPath(`${basePath}react.development.js`));
+      await GraphqlPlaygroundComponent.loadJavaScript(getAssetPath(`${basePath}react-dom.development.js`));
+      await GraphqlPlaygroundComponent.loadJavaScript(getAssetPath(`${basePath}graphiql.min.js`));
+      await GraphqlPlaygroundComponent.loadJavaScript(getAssetPath(`${basePath}explorer.index.umd.js`));
 
-      await GraphqlPlaygroundComponent.loadCss(`${basePath}graphiql.min.css`);
-      await GraphqlPlaygroundComponent.loadCss(`${basePath}explorer.style.css`);
+      await GraphqlPlaygroundComponent.loadCss(getAssetPath(`${basePath}graphiql.min.css`));
+      await GraphqlPlaygroundComponent.loadCss(getAssetPath(`${basePath}explorer.style.css`));
     } catch (error) {
       console.error('Error loading assets:', error);
     }
@@ -94,8 +93,8 @@ export class GraphqlPlaygroundComponent {
       const root = ReactDOM.createRoot(containerEl);
       // @ts-ignore
       const fetcher = GraphiQL.createFetcher({
-        // url: 'https://swapi-graphql.netlify.app/.netlify/functions/index',
-        url: 'http://localhost:9995/graphql'
+        url: 'https://swapi-graphql.netlify.app/.netlify/functions/index',
+        // url: 'http://localhost:9995/graphql'
       });
       // @ts-ignore
       const explorerPlugin = GraphiQLPluginExplorer.explorerPlugin();

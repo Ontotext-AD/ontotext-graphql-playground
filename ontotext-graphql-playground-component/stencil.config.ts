@@ -1,8 +1,10 @@
 import { Config } from '@stencil/core';
-import commonjs from "@rollup/plugin-commonjs";
+import { angularOutputTarget } from '@stencil/angular-output-target';
 import nodeResolve from "@rollup/plugin-node-resolve";
-import {angularOutputTarget} from "@stencil/angular-output-target";
+import commonjs from "@rollup/plugin-commonjs";
 import {sass} from "@stencil/sass";
+
+const path = `${__dirname}/src/pages/dev-server.js`;
 
 export const config: Config = {
   namespace: 'ontotext-graphql-playground-component',
@@ -39,15 +41,15 @@ export const config: Config = {
           src: 'components/assets',
           dest: 'build/assets',
         }
-      ],
+      ]
     },
     angularOutputTarget({
-      componentCorePackage: 'graphql-playground-component',
-      directivesProxyFile: '../ontotext-graphql-playground-component/src/components.d',
-      // valueAccessorConfigs: angularValueAccessorBindings,
+      componentCorePackage: 'ontotext-graphql-playground-component',
+      outputType: 'component',
+      directivesProxyFile: './generated/components.ts',
+      directivesArrayFile: './generated/index.ts',
     }),
   ],
-    plugins: [sass()],
   testing: {
     browserHeadless: "new",
   },
@@ -58,4 +60,8 @@ export const config: Config = {
       commonjs(),
     ],
   },
+  plugins: [sass()],
+  devServer: {
+    requestListenerPath: path
+  }
 };
