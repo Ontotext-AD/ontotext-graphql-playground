@@ -40,7 +40,7 @@ export const config: Config = {
         {
           src: 'components/assets',
           dest: 'build/assets',
-        }
+        },
       ]
     },
     angularOutputTarget({
