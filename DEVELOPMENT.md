@@ -139,7 +139,7 @@ module.exports = {
     - Test thoroughly after any updates to ensure no breaking changes affect the StencilJS component.
 
 2. **Code Consistency**
-    - Follow the coding standards of the Ontotext organization for both the `graphiql` submodule and the StencilJS component.
+    - Development in the graphiql must comply with the practices and standarts in that project. This is needed to prevent spreading unwanted changes in the codebase hance preventing conflicts during upgrade.
     - Use linting tools for consistent code formatting:
       ```bash
       npm run lint
