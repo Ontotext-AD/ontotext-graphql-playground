@@ -1,0 +1,9 @@
+graphql-playground-component {
+  display: block;
+  height: 100vh;
+}
+
+#graphiql {
+  display: block;
+  height: 100%;
+}
