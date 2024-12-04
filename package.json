@@ -1,0 +1,27 @@
+{
+  "name": "ontotext-graphql-playground",
+  "version": "0.0.0-SNAPSHOT",
+  "private": true,
+  "scripts": {
+    "install:graphiql": "cd graphiql && yarn install",
+    "install:component": "cd ontotext-graphql-playground-component && npm install",
+    "install:component:ci": "cd ontotext-graphql-playground-component && npm ci",
+    "install": "npm run install:graphiql && npm run install:component",
+    "build:graphiql": "cd graphiql && yarn build && yarn build-bundles",
+    "build:component": "cd ontotext-graphql-playground-component && npm run build",
+    "build:copy:bundles": "cd ontotext-graphql-playground-component && npm run prestart",
+    "build": "npm run build:graphiql && npm run build:copy:bundles && npm run build:component",
+    "prestart": "npm run build:graphiql",
+    "start": "cd ontotext-graphql-playground-component && npm run start",
+    "clean:graphiql": "cd graphiql && yarn build-bundles-clean && yarn build-clean",
+    "clean": "npm run clean:graphiql && cd scripts && ./clean.sh",
+    "test:component": "cd ontotext-graphql-playground-component && npm run test",
+    "test": "npm run test:component",
+    "cy:component:run": "cd ontotext-graphql-playground-component && npm run cy:run",
+    "cy:run": "npm run cy:component:run",
+    "lint:component": "cd ontotext-graphql-playground-component && npm run lint",
+    "lint:component:fix": "cd ontotext-graphql-playground-component && npm run lint:fix",
+    "lint": "npm run lint:component",
+    "lint:fix": "npm run lint:component:fix"
+  }
+}
