@@ -1,9 +1,0 @@
-{
-  "ignorePatterns": ["**/*cy.js", "cypress.config.js"],
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
-  "extends": [
-    "plugin:@stencil-community/recommended"
-  ]
-}
