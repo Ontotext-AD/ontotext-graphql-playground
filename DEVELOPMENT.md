@@ -3,6 +3,8 @@
 
 The **Ontotext GraphQL Playground** is a project designed to provide an intuitive interface for exploring and interacting with GraphQL APIs. It builds on a forked repository of [GraphiQL](https://github.com/graphql/graphiql) and enhances it with additional functionality by integrating it into a reusable StencilJS-based web component. This setup ensures flexibility, reusability, and compatibility with other Ontotext projects, starting with the GraphDB Workbench.
 
+---
+
 ## Project Structure
 
 The project is organized as follows:
@@ -13,11 +15,13 @@ The project is organized as follows:
 - **`ontotext-graphql-playground-component/`**  
   A [StencilJS](https://stenciljs.com/) web component that wraps the `graphiql` library and publishes it to npm for use in other projects. This component provides a framework-agnostic way to embed the GraphQL Playground in various applications.
 
+---
+
 ## Workflow
 
 The project development workflow follows these steps:
 
-### 1. **Setting up the Repository**
+### 1. Setting up the Repository
 - Clone the repository, including the submodule:
   ```bash
   git clone --recurse-submodules https://github.com/Ontotext-AD/ontotext-graphql-playground
@@ -29,72 +33,94 @@ The project development workflow follows these steps:
   git submodule update --init --recursive
   ```
 
-### 2. **Working with the `graphiql` Submodule**
+---
+
+### 2. Working with the `graphiql` Submodule
 - The `graphiql` submodule resides in its own folder and can be updated or customized as needed.
 - Make changes in the [forked repository](https://github.com/Ontotext-AD/graphiql-fork) to introduce Ontotext-specific features.
 - Ensure compatibility with the StencilJS component by maintaining API stability.
 
-### 3. **Developing the StencilJS Component**
+---
+
+### 3. Developing the StencilJS Component
 Check out stenciljs docs [here](https://stenciljs.com/docs/my-first-component).
-- Navigate to the `ontotext-graphql-playground-component/` directory.
-- Install dependencies:
+- In the root directory install dependencies:
   ```bash
   npm install
   ```
+  This script will:
+  1. Navigate to the `graphiql` submodule and install dependencies with `yarn`.
+  2. Navigate to the `ontotext-graphql-playground-component` directory and install its dependencies with `npm`.
+
+ 
 - Start the development server:
   ```bash
   npm run start
   ```
+  This script will:
+   1. Navigate to the `graphiql` submodule and build all bundles with `yarn`.
+   2. Navigate to the `ontotext-graphql-playground-component` directory, copy all artifacts from `graphiql` build, build and start the component with `npm`.
+
+
 - Update the StencilJS component to wrap `graphiql` features with Ontotext-specific styling and behavior.
 
-### 4. **Building and Publishing**
+---
+
+### 4. Building and Publishing
 
 To build and publish the StencilJS component, follow these steps:
 
 1. **Prepare Dependencies**
-    - First, navigate to the `graphiql` directory to install and build the project. [See](./graphiql/DEVELOPMENT.md) 
-    - Obtain the following build artifacts from the `graphiql` build:
-        - `graphiql.min.css`
-        - `graphiql.min.js`
-    - Copy these files into the `ontotext-graphql-playground-component/src/components/assets` directory.
-
-2. **Additional Assets**
-    - Additionally, you need to obtain and copy the following files into the same directory (`ontotext-graphql-playground-component/src/components/assets`):
-        - `explorer.index.umd.js`
-        - `explorer.style.css`
+    - First, navigate to the root directory to install the project. Run
+     ```bash
+      npm install
+     ```
+2. **Build the Component**  
+    - Build both projects. Run:
+     ```bash
+      npm run build
+     ```
+        
+3. **Assets**
+    The build step takes care of obtaining the assets needed for the component to build and run successfully. 
+    It copies these files into the `ontotext-graphql-playground-component/src/components/assets` directory
+    - from `graphiql`
+      - `graphiql.min.css`
+      - `graphiql.min.js`
+    - from `graphiql-plugin-explorer`
+      - `index.umd.js` (renamed to `explorer.index.umd.js`)
+      - `style.css` (renamed to `explorer.style.css`)
+    - from `npm-modules` of `ontotext-graphql-playground-component` (as dev dependencies):
         - `react.development.js`
         - `react-dom.development.js`
 
-3. **Assets Output**
-    - During the build process, these files are copied to:
+4. **Assets Output**
+    - During the build process, assets files are copied to:
       ```
       dist/ontotext-graphql-playground-component/assets
-      ```
-
-4. **Build the Component**
-    - Navigate to the `ontotext-graphql-playground-component` directory and build the component for production:
-      ```bash
-      npm run build
       ```
 
 5. **Publish to npm**
     - Publish the built component to npm:
       ```bash
-      npm publish
+       npm publish
       ```
 
 6. **Integration**
     - Once published, use the component in other projects, such as the GraphDB Workbench.
 
-### 5. **Testing**
-    // TODO describe with cypress install
+---
 
+### 5. Testing
+// TODO describe with cypress install
 
-### 6. **Integrating the Component into Another Project**
+---
+
+### 6. Integrating the Component into Another Project
 
 To integrate the **Ontotext GraphQL Playground Component** into another project, follow these steps:
 
-#### 1. **Install the Component via npm**
+#### 1. Install the Component via npm
 
 Run the following command in your project directory to install the component:
 
@@ -102,7 +128,7 @@ Run the following command in your project directory to install the component:
 npm install ontotext-graphql-playground-component
 ```
 
-#### 2. **Ensure Asset Files Are Accessible**
+#### 2. Ensure Asset Files Are Accessible
 
 The component will attempt to load the required files from the `assets` folder. You must ensure these files are copied to the correct location in your project during the build process.
 
@@ -128,9 +154,10 @@ module.exports = {
 };
 ```
 
-#### 3. **Usage Example with Angular (Angular 18)**
+#### 3. Usage Example with Angular (Angular 18)
 // TODO add description
 
+---
 
 ## Best Practices
 
@@ -139,7 +166,7 @@ module.exports = {
     - Test thoroughly after any updates to ensure no breaking changes affect the StencilJS component.
 
 2. **Code Consistency**
-    - Development in the graphiql must comply with the practices and standarts in that project. This is needed to prevent spreading unwanted changes in the codebase hance preventing conflicts during upgrade.
+    - Development in the `graphiql` must comply with the practices and standards in that project. This is needed to prevent spreading unwanted changes in the codebase, hence preventing conflicts during upgrade.
     - Use linting tools for consistent code formatting:
       ```bash
       npm run lint

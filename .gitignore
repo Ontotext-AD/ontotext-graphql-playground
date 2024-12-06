@@ -132,3 +132,5 @@ dist
 .idea
 
 .generated
+/.idea/
+/ontotext-graphql-playground.iml

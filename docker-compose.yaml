@@ -1,0 +1,14 @@
+version: '3.3'
+services:
+    root:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: yarn_installer
+        working_dir: /app
+        volumes:
+            - .:/app
+        command: >
+            sh -c "
+            npm run install:graphiql &&
+            npm run build:graphiql"
