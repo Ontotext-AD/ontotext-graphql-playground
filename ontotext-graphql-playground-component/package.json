@@ -32,9 +32,11 @@
     "loader/"
   ],
   "scripts": {
+    "prebuild": "npm run copy-files",
     "build": "stencil build",
-    "prestart": "cd scripts && ./copy-files.sh",
+    "prestart": "npm run copy-files",
     "start": "stencil build --dev --watch --serve",
+    "copy-files": "cd scripts && ./copy-files.sh",
     "test": "stencil test --spec --files src/**/*.spec.ts",
     "test.watch": "stencil test --spec --files src/**/*.spec.ts --watchAll",
     "generate": "stencil generate",

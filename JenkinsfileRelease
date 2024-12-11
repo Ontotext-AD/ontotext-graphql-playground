@@ -8,7 +8,7 @@ pipeline {
     gitParameter name: 'branch',
                 description: 'The branch to check out',
                 branchFilter: 'origin/(.*)',
-                defaultValue: 'master',
+                defaultValue: 'main',
                 selectedValue: 'DEFAULT',
                 type: 'PT_BRANCH',
                 listSize: '0',
@@ -20,7 +20,7 @@ pipeline {
   }
 
   agent {
-    label 'graphdb-jenkins-node'
+    label 'graphdb-jenkins-node-2'
   }
 
   options {
@@ -32,9 +32,17 @@ pipeline {
   environment {
     CI = "true"
     NPM_TOKEN = credentials('npm-token')
+    COMPOSE_PROJECT_NAME = "${JOB_NAME}_${BUILD_NUMBER}"
   }
 
   stages {
+    stage('Log Info') {
+      steps {
+        echo "Job name: ${JOB_NAME}"
+        echo "Build no.: ${BUILD_NUMBER}"
+      }
+    }
+
     stage ('Prepare') {
       steps {
         // Switch to branch
@@ -45,12 +53,19 @@ pipeline {
           sh "npm version --git-tag-version=false ${ReleaseVersion}"
         }
 
-        // Install graphiql
-        sh 'docker-compose up --build'
+        // Export COMPOSE_PROJECT_NAME for use in docker-compose
+        sh "export COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}"
+
+        // Install & Build graphiql
+        sh 'docker-compose -p ${COMPOSE_PROJECT_NAME} up --build --abort-on-container-exit'
 
         // Install & Build component
         sh 'npm run install:component:ci'
         sh 'npm run build:component'
+
+        // Align folder permissions
+        sh 'sudo chown -R \$(id -u):\$(id -g) .'
+
       }
     }
 
@@ -65,6 +80,13 @@ pipeline {
   }
 
   post {
+    always {
+      sh "docker-compose -p ${env.COMPOSE_PROJECT_NAME}  down --remove-orphans --rmi all || true"
+      dir("ontotext-graphql-playground-component/") {
+        sh "rm .npmrc"
+      }
+    }
+
     success {
       // Commit, tag and push the changes in Git
       sh "git commit -a -m 'Release ${ReleaseVersion}'"
@@ -81,13 +103,6 @@ pipeline {
           mimeType: 'text/html',
           body: '''${SCRIPT, template="groovy-html.template"}'''
         )
-      }
-    }
-
-    always {
-      sh "git checkout .npmrc"
-      dir("ontotext-graphql-playground-component/") {
-        sh "rm .npmrc"
       }
     }
   }
