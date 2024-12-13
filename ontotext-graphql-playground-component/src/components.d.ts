@@ -7,6 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface GraphqlPlaygroundComponent {
+        "endpoint": string;
     }
 }
 declare global {
@@ -22,6 +23,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface GraphqlPlaygroundComponent {
+        "endpoint"?: string;
     }
     interface IntrinsicElements {
         "graphql-playground-component": GraphqlPlaygroundComponent;

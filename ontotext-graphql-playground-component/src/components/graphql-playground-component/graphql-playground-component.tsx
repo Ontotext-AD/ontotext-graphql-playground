@@ -1,4 +1,4 @@
-import {Component, Host, h, getAssetPath, JSX} from '@stencil/core';
+import { Component, Host, h, getAssetPath, JSX, Prop } from '@stencil/core';
 
 @Component({
   tag: 'graphql-playground-component',
@@ -7,6 +7,8 @@ import {Component, Host, h, getAssetPath, JSX} from '@stencil/core';
   shadow: false,
 })
 export class GraphqlPlaygroundComponent {
+  @Prop() endpoint: string;
+
   static loadJavaScript(url: string, async = false): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       if (!document.querySelector(`script[src="${url}"]`)) {
@@ -25,7 +27,7 @@ export class GraphqlPlaygroundComponent {
     });
   }
 
-  static loadCss(url: string): Promise<void>  {
+  static loadCss(url: string): Promise<void> {
     return new Promise<void>((resolve) => {
       if (!document.querySelector(`link[href="${url}"]`)) {
         const loader = document.createElement('link');
@@ -35,7 +37,7 @@ export class GraphqlPlaygroundComponent {
         document.head.appendChild(loader);
       }
       resolve();
-    })
+    });
   }
 
   async componentWillLoad(): Promise<void> {
@@ -53,7 +55,6 @@ export class GraphqlPlaygroundComponent {
     }
   }
 
-
   componentDidLoad(): void {
     setTimeout(() => {
       const containerEl = document.querySelector('graphql-playground-component #graphiql');
@@ -61,8 +62,7 @@ export class GraphqlPlaygroundComponent {
       const root = ReactDOM.createRoot(containerEl);
       // @ts-ignore
       const fetcher = GraphiQL.createFetcher({
-        url: 'https://swapi-graphql.netlify.app/.netlify/functions/index',
-        // url: 'http://localhost:9995/graphql'
+        url: this.endpoint,
       });
       // @ts-ignore
       const explorerPlugin = GraphiQLPluginExplorer.explorerPlugin();
@@ -74,12 +74,14 @@ export class GraphqlPlaygroundComponent {
           plugins: [explorerPlugin],
         }),
       );
-    }, 1000);
+    }, 500);
   }
 
   render(): JSX.Element {
-    return (<Host>
-      <div id="graphiql">Loading...</div>
-    </Host>);
+    return (
+      <Host>
+        <div id="graphiql">Loading...</div>
+      </Host>
+    );
   }
 }
