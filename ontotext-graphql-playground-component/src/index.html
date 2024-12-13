@@ -7,6 +7,14 @@
 
     <script type="module" src="/build/ontotext-graphql-playground-component.esm.js"></script>
     <script nomodule src="/build/ontotext-graphql-playground-component.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const graphqlPlayground = document.querySelector('graphql-playground-component');
+        if (graphqlPlayground) {
+          graphqlPlayground.configuration = {endpoint: "https://swapi-graphql.netlify.app/.netlify/functions/index"};
+        }
+      });
+    </script>
   </head>
   <body>
     <graphql-playground-component></graphql-playground-component>

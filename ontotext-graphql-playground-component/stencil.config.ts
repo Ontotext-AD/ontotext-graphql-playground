@@ -41,6 +41,7 @@ export const config: Config = {
           src: 'components/assets',
           dest: 'build/assets',
         },
+        {src: 'pages'},
       ]
     },
     angularOutputTarget({

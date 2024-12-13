@@ -1,4 +1,5 @@
-import {Component, Host, h, getAssetPath, JSX} from '@stencil/core';
+import {Component, Host, h, getAssetPath, JSX, Prop, Watch} from '@stencil/core';
+import {ExternalGraphqlPlaygroundConfiguration} from "../../models/external-graphql-playground-configuration";
 
 @Component({
   tag: 'graphql-playground-component',
@@ -7,6 +8,13 @@ import {Component, Host, h, getAssetPath, JSX} from '@stencil/core';
   shadow: false,
 })
 export class GraphqlPlaygroundComponent {
+  @Prop() configuration: ExternalGraphqlPlaygroundConfiguration;
+
+  @Watch('configuration')
+  configurationChanged(configuration: ExternalGraphqlPlaygroundConfiguration) {
+    this.init(configuration);
+  }
+
   static loadJavaScript(url: string, async = false): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       if (!document.querySelector(`script[src="${url}"]`)) {
@@ -25,7 +33,7 @@ export class GraphqlPlaygroundComponent {
     });
   }
 
-  static loadCss(url: string): Promise<void>  {
+  static loadCss(url: string): Promise<void> {
     return new Promise<void>((resolve) => {
       if (!document.querySelector(`link[href="${url}"]`)) {
         const loader = document.createElement('link');
@@ -35,7 +43,7 @@ export class GraphqlPlaygroundComponent {
         document.head.appendChild(loader);
       }
       resolve();
-    })
+    });
   }
 
   async componentWillLoad(): Promise<void> {
@@ -53,33 +61,41 @@ export class GraphqlPlaygroundComponent {
     }
   }
 
-
   componentDidLoad(): void {
     setTimeout(() => {
-      const containerEl = document.querySelector('graphql-playground-component #graphiql');
+      if (this.configuration) {
+        this.init(this.configuration);
+      } else {
+        console.error('Configuration is undefined');
+      }
+    }, 500);
+  }
+
+  private init(configuration: ExternalGraphqlPlaygroundConfiguration) {
+    const containerEl = document.querySelector('graphql-playground-component #graphiql');
+    // @ts-ignore
+    const root = ReactDOM.createRoot(containerEl);
+    // @ts-ignore
+    const fetcher = GraphiQL.createFetcher({
+      url: configuration.endpoint,
+    });
+    // @ts-ignore
+    const explorerPlugin = GraphiQLPluginExplorer.explorerPlugin();
+    root.render(
       // @ts-ignore
-      const root = ReactDOM.createRoot(containerEl);
-      // @ts-ignore
-      const fetcher = GraphiQL.createFetcher({
-        url: 'https://swapi-graphql.netlify.app/.netlify/functions/index',
-        // url: 'http://localhost:9995/graphql'
-      });
-      // @ts-ignore
-      const explorerPlugin = GraphiQLPluginExplorer.explorerPlugin();
-      root.render(
-        // @ts-ignore
-        React.createElement(GraphiQL, {
-          fetcher,
-          defaultEditorToolsVisibility: true,
-          plugins: [explorerPlugin],
-        }),
-      );
-    }, 1000);
+      React.createElement(GraphiQL, {
+        fetcher,
+        defaultEditorToolsVisibility: true,
+        plugins: [explorerPlugin],
+      }),
+    );
   }
 
   render(): JSX.Element {
-    return (<Host>
-      <div id="graphiql">Loading...</div>
-    </Host>);
+    return (
+      <Host>
+        <div id="graphiql">Loading...</div>
+      </Host>
+    );
   }
 }
