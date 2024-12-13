@@ -4,7 +4,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: yarn_installer
+        container_name: "${COMPOSE_PROJECT_NAME}_yarn_installer"
         working_dir: /app
         volumes:
             - .:/app

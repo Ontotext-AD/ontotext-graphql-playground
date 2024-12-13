@@ -10,6 +10,7 @@ pipeline {
     environment {
         REPO_URL = 'https://github.com/Ontotext-AD/ontotext-graphql-playground'
         GIT_PIPELINE = "Ontotext GraphQL Playground Component"
+        COMPOSE_PROJECT_NAME = "${JOB_NAME}_${BUILD_NUMBER}"
     }
 
     stages {
@@ -22,9 +23,18 @@ pipeline {
             }
         }
 
+        stage('Log Info') {
+            steps {
+                echo "Pipeline: ${GIT_PIPELINE}"
+                echo "Repository: ${REPO_URL}"
+            }
+        }
+
         stage('Install & Build') {
             steps {
-                sh 'docker-compose up --build'
+                // Export COMPOSE_PROJECT_NAME for use in docker-compose
+                sh "export COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME}"
+                sh 'docker-compose -p ${COMPOSE_PROJECT_NAME} up --build --abort-on-container-exit'
                 sh 'npm run install:component:ci'
                 sh 'npm run build:component'
             }
@@ -58,7 +68,7 @@ pipeline {
     post {
 
         always {
-            sh "docker-compose down --remove-orphans --rmi all"
+            sh "docker-compose -p ${COMPOSE_PROJECT_NAME}  down --remove-orphans --rmi all || true"
         }
 
         success {
