@@ -5,8 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { ExternalGraphqlPlaygroundConfiguration } from "./models/external-graphql-playground-configuration";
+export { ExternalGraphqlPlaygroundConfiguration } from "./models/external-graphql-playground-configuration";
 export namespace Components {
     interface GraphqlPlaygroundComponent {
+        "configuration": ExternalGraphqlPlaygroundConfiguration;
     }
 }
 declare global {
@@ -22,6 +25,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface GraphqlPlaygroundComponent {
+        "configuration"?: ExternalGraphqlPlaygroundConfiguration;
     }
     interface IntrinsicElements {
         "graphql-playground-component": GraphqlPlaygroundComponent;

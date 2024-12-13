@@ -4,6 +4,7 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3333/',
     videoUploadOnPasses: false,
+    fixturesFolder: 'cypress/fixtures',
     video: false,
     setupNodeEvents(on, config) {
       // Any necessary node event setup
