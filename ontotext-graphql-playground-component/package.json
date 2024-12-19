@@ -1,6 +1,6 @@
 {
   "name": "ontotext-graphql-playground-component",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Ontotext GraphQL Playground Component is a reusable web component built with StencilJS, designed to provide an intuitive and interactive interface for exploring GraphQL APIs. This framework-agnostic component integrates with web frameworks like Angular, React, and more. It leverages GraphiQL and includes custom enhancements tailored for Ontotext’s GraphDB Workbench, providing GraphQL query execution and visualization.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
