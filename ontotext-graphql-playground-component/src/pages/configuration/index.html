@@ -7,11 +7,12 @@
     <script type="module" src="/build/ontotext-graphql-playground-component.esm.js"></script>
     <script nomodule src="/build/ontotext-graphql-playground-component.js"></script>
 
-    <script src="./default-view/main.js"></script>
+    <script src="./configuration/main.js"></script>
     <script src="./main.js"></script>
   </head>
   <body>
     <a href="/">back</a>
+    <button id="changeEndpointButton" onclick="changeEndpoint()">change endpoint</button>
     <hr />
     <div class="content">
       <graphql-playground-component></graphql-playground-component>

@@ -4,19 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
   <title>Stencil Component Starter</title>
-
-    <script type="module" src="/build/ontotext-graphql-playground-component.esm.js"></script>
-    <script nomodule src="/build/ontotext-graphql-playground-component.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const graphqlPlayground = document.querySelector('graphql-playground-component');
-        if (graphqlPlayground) {
-          graphqlPlayground.configuration = {endpoint: "https://swapi-graphql.netlify.app/.netlify/functions/index"};
-        }
-      });
-    </script>
+    <script src="/pages/main.js"></script>
   </head>
   <body>
-    <graphql-playground-component></graphql-playground-component>
+  <ul>
+    <li><a href="/pages/default-view">default view</a></li>
+    <li><a href="/pages/configuration">configuration</a></li>
+  </ul>
   </body>
 </html>
