@@ -1,10 +1,10 @@
 /// <reference types="cypress" />
 export default class DefaultViewPageSteps {
-  static visit() {
+  static visit(): void {
     cy.visit('/pages/default-view');
   }
 
-  static getPlayground() {
+  static getPlayground(): Cypress.Chainable {
     return cy.get('.graphiql-query-editor textarea');
   }
 }

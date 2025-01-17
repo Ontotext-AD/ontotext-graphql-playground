@@ -8,6 +8,9 @@ import {ExternalGraphqlPlaygroundConfiguration} from "../../models/external-grap
   shadow: false,
 })
 export class GraphqlPlaygroundComponent {
+  // React root instance must be created only once and reused
+  private reactRoot: any;
+
   @Prop() configuration: ExternalGraphqlPlaygroundConfiguration;
 
   @Watch('configuration')
@@ -73,15 +76,22 @@ export class GraphqlPlaygroundComponent {
 
   private init(configuration: ExternalGraphqlPlaygroundConfiguration) {
     const containerEl = document.querySelector('graphql-playground-component #graphiql');
-    // @ts-ignore
-    const root = ReactDOM.createRoot(containerEl);
+    if (!containerEl) {
+      console.error('Container element not found');
+      return;
+    }
+    if (!this.reactRoot) {
+      // Create the root only once
+      // @ts-ignore
+      this.reactRoot = ReactDOM.createRoot(containerEl);
+    }
     // @ts-ignore
     const fetcher = GraphiQL.createFetcher({
       url: configuration.endpoint,
     });
     // @ts-ignore
     const explorerPlugin = GraphiQLPluginExplorer.explorerPlugin();
-    root.render(
+    this.reactRoot.render(
       // @ts-ignore
       React.createElement(GraphiQL, {
         fetcher,
@@ -89,6 +99,13 @@ export class GraphqlPlaygroundComponent {
         plugins: [explorerPlugin],
       }),
     );
+  }
+
+  disconnectedCallback() {
+    if (this.reactRoot) {
+      this.reactRoot.unmount();
+      this.reactRoot = null;
+    }
   }
 
   render(): JSX.Element {
