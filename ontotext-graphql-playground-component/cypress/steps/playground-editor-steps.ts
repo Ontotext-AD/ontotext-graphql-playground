@@ -1,10 +1,10 @@
 /// <reference types="cypress" />
 export default class PlaygroundEditorSteps {
-  static getQueryEditor() {
+  static getQueryEditor(): Cypress.Chainable {
     return cy.get('.graphiql-query-editor textarea');
 }
 
-  static setInEditor(text: string) {
+  static setInEditor(text: string): Cypress.Chainable {
     return cy.window()
       .then((win) => {
         // @ts-ignore CodeMirror is undefined
@@ -13,11 +13,11 @@ export default class PlaygroundEditorSteps {
       });
   }
 
-  static clear() {
+  static clear(): void {
     PlaygroundEditorSteps.setInEditor('');
   }
 
-  static getEditorContent() {
+  static getEditorContent(): Cypress.Chainable {
     return cy.window().then((win) => {
       // @ts-ignore CodeMirror is undefined
       const codeMirrorInstance = win.document.querySelector('.CodeMirror').CodeMirror;
@@ -25,16 +25,16 @@ export default class PlaygroundEditorSteps {
     });
   }
 
-  static getExecuteButton() {
+  static getExecuteButton(): Cypress.Chainable {
     return cy.get('.graphiql-execute-button');
   }
 
-  static executeQuery(delay = 150) {
+  static executeQuery(delay = 150): Cypress.Chainable {
     cy.wait(delay);
     return PlaygroundEditorSteps.getExecuteButton().click();
   }
 
-  static getResponse() {
+  static getResponse(): Cypress.Chainable {
     return cy.get('.graphiql-response');
   }
 }

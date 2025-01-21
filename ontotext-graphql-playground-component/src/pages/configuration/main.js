@@ -7,3 +7,24 @@ function changeEndpoint() {
     };
   }
 }
+
+function addHeaders() {
+  const graphqlPlayground = getPlaygroundComponent();
+  if (graphqlPlayground) {
+    graphqlPlayground.configuration = {
+      ...getConfiguration(),
+      headers: {
+        'Authorization': 'Bearer 1234567890'
+      }
+    };
+  }
+}
+
+function removeHeaders() {
+  const graphqlPlayground = getPlaygroundComponent();
+  if (graphqlPlayground) {
+    graphqlPlayground.configuration = {
+      ...getConfiguration()
+    };
+  }
+}
