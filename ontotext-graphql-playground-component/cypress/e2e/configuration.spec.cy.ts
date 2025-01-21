@@ -47,5 +47,39 @@ describe('Component configuration', () => {
     // Then I get expected result from the new endpoint
     PlaygroundEditorSteps.getResponse().should('contain', '"name": "Morty Smith"');
   });
+
+  it('Should be able to set or remove request headers', () => {
+    // Given that by default there are no headers provided with the configuration
+    // When I set a query
+    PlaygroundEditorSteps.setInEditor(`
+      query GetContinentById {
+        continent(code: "EU") {
+          name
+        }
+      }
+    `);
+    // And I execute the query
+    PlaygroundEditorSteps.executeQuery();
+    // Then I expect the request to not contain my expected header
+    cy.wait('@countries').its('request.headers').should('not.have.a.property', 'authorization');
+
+    // When I set request headers
+    ComponentConfigurationViewPageSteps.setHeaders();
+    // when config is changed, the playground performs a new introspection query
+    cy.wait('@countries');
+    // And I execute the query
+    PlaygroundEditorSteps.executeQuery();
+    // Then I expect the request to contain my expected header
+    cy.wait('@countries').its('request.headers').should('have.a.property', 'authorization');
+
+    // When I remove the headers
+    ComponentConfigurationViewPageSteps.removeHeaders();
+    // when config is changed, the playground performs a new introspection query
+    cy.wait('@countries');
+    // And I execute the query
+    PlaygroundEditorSteps.executeQuery();
+    // Then I expect the request to not contain my expected header
+    cy.wait('@countries').its('request.headers').should('not.have.a.property', 'authorization');
+  });
 });
 

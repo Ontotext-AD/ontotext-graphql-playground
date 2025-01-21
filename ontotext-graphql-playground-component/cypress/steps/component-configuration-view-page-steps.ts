@@ -11,4 +11,12 @@ export class ComponentConfigurationViewPageSteps {
   static changeEndpoint(): void {
     cy.get('#changeEndpointButton').click();
   }
+
+  static setHeaders(): void {
+    cy.get('#addHeadersButton').click();
+  }
+
+  static removeHeaders(): void {
+    cy.get('#removeHeadersButton').click();
+  }
 }

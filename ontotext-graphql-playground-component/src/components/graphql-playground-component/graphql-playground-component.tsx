@@ -85,17 +85,15 @@ export class GraphqlPlaygroundComponent {
       // @ts-ignore
       this.reactRoot = ReactDOM.createRoot(containerEl);
     }
-    // @ts-ignore
-    const fetcher = GraphiQL.createFetcher({
-      url: configuration.endpoint,
-    });
+
+    const fetcher = this.getFetcher(configuration);
     // @ts-ignore
     const explorerPlugin = GraphiQLPluginExplorer.explorerPlugin();
     this.reactRoot.render(
       // @ts-ignore
       React.createElement(GraphiQL, {
         fetcher,
-        defaultEditorToolsVisibility: true,
+        defaultEditorToolsVisibility: false,
         plugins: [explorerPlugin],
       }),
     );
@@ -114,5 +112,16 @@ export class GraphqlPlaygroundComponent {
         <div id="graphiql">Loading...</div>
       </Host>
     );
+  }
+
+  private getFetcher(configuration: ExternalGraphqlPlaygroundConfiguration) {
+    const fetcherConfig = {
+      url: configuration.endpoint,
+    }
+    if (configuration.headers) {
+      fetcherConfig['headers'] = configuration.headers;
+    }
+    // @ts-ignore
+    return GraphiQL.createFetcher(fetcherConfig);
   }
 }
