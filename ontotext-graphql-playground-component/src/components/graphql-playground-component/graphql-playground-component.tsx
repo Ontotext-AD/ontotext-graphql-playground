@@ -118,6 +118,8 @@ export class GraphqlPlaygroundComponent {
     const fetcherConfig = {
       url: configuration.endpoint,
     }
+    // If headers are provided, add them to the fetcher configuration. We currently just pass them as they are without
+    // any validation.
     if (configuration.headers) {
       fetcherConfig['headers'] = configuration.headers;
     }
