@@ -3,7 +3,7 @@ graphql-playground-component {
   height: 100vh;
 }
 
-#graphiql {
+graphql-playground-component #graphiql {
   display: block;
   height: 100%;
 }
