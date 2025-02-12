@@ -14,10 +14,15 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "jsx": "react",
-    "jsxFactory": "h"
+    "jsxFactory": "h",
+    "paths": {
+      "@graphiql": ["../graphiql/packages/graphiql/esm/index.d.ts"],
+      "@fetcher": ["../graphiql/packages/graphiql-toolkit/dist/esm/create-fetcher/types.d.mts"]
+    }
   },
   "include": [
-    "src"
+    "src",
+    "global.d.ts"
   ],
   "exclude": [
     "node_modules"
