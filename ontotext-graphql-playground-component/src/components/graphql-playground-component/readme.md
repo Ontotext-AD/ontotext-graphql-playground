@@ -12,6 +12,13 @@
 | `configuration` | --        |             | `ExternalGraphqlPlaygroundConfiguration` | `undefined` |
 
 
+## Events
+
+| Event        | Description | Type                       |
+| ------------ | ----------- | -------------------------- |
+| `abortQuery` |             | `CustomEvent<RequestInit>` |
+
+
 ## Methods
 
 ### `setLanguage(newLanguage: string) => Promise<void>`
