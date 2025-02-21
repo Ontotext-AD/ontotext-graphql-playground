@@ -12,6 +12,13 @@
 | `configuration` | --        |             | `ExternalGraphqlPlaygroundConfiguration` | `undefined` |
 
 
+## Events
+
+| Event        | Description                                                                                    | Type                       |
+| ------------ | ---------------------------------------------------------------------------------------------- | -------------------------- |
+| `abortQuery` | An event is emitted when a query is aborted, with the initialized request data as the payload. | `CustomEvent<RequestInit>` |
+
+
 ## Methods
 
 ### `setLanguage(newLanguage: string) => Promise<void>`
