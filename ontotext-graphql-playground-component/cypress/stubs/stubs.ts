@@ -16,6 +16,10 @@ export class Stubs {
       });
     });
   }
+  
+  static stubQueryResponse(fixture = 'query-response.json', withDelay = 0) {
+    cy.intercept('POST', ENDPOINT_COUNTRIES, {fixture, delay: withDelay}).as('query-response');
+  }
 
   static stubCountriesSchema(): void {
     cy.intercept('POST', ENDPOINT_COUNTRIES, (req) => {

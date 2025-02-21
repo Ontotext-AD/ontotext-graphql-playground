@@ -18,8 +18,23 @@ export namespace Components {
         "setLanguage": (newLanguage: string) => Promise<void>;
     }
 }
+export interface GraphqlPlaygroundComponentCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGraphqlPlaygroundComponentElement;
+}
 declare global {
+    interface HTMLGraphqlPlaygroundComponentElementEventMap {
+        "abortQuery": RequestInit;
+    }
     interface HTMLGraphqlPlaygroundComponentElement extends Components.GraphqlPlaygroundComponent, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGraphqlPlaygroundComponentElementEventMap>(type: K, listener: (this: HTMLGraphqlPlaygroundComponentElement, ev: GraphqlPlaygroundComponentCustomEvent<HTMLGraphqlPlaygroundComponentElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGraphqlPlaygroundComponentElementEventMap>(type: K, listener: (this: HTMLGraphqlPlaygroundComponentElement, ev: GraphqlPlaygroundComponentCustomEvent<HTMLGraphqlPlaygroundComponentElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLGraphqlPlaygroundComponentElement: {
         prototype: HTMLGraphqlPlaygroundComponentElement;
@@ -32,6 +47,10 @@ declare global {
 declare namespace LocalJSX {
     interface GraphqlPlaygroundComponent {
         "configuration"?: ExternalGraphqlPlaygroundConfiguration;
+        /**
+          * An event is emitted when a query is aborted, with the initialized request data as the payload.
+         */
+        "onAbortQuery"?: (event: GraphqlPlaygroundComponentCustomEvent<RequestInit>) => void;
     }
     interface IntrinsicElements {
         "graphql-playground-component": GraphqlPlaygroundComponent;
