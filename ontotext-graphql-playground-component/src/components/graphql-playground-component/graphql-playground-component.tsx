@@ -1,8 +1,9 @@
-import {Component, Host, h, getAssetPath, JSX, Prop, Watch, Method} from '@stencil/core';
+import {Component, Host, h, getAssetPath, JSX, Prop, Watch, Method, Event, EventEmitter} from '@stencil/core';
 import {ExternalGraphqlPlaygroundConfiguration} from "../../models/external-graphql-playground-configuration";
 import {GraphiQLProps} from '@graphiql';
 import {ResourceUtil} from '../../utils/resource-util';
 import {GraphiqlConfigurationMapper} from '../../mappers/graphiql-configuration.mapper';
+import {InternalGraphqlPlaygroundConfiguration} from '../../models/internal-graphql-playground-configuration';
 
 @Component({
   tag: 'graphql-playground-component',
@@ -30,6 +31,11 @@ export class GraphqlPlaygroundComponent {
   configurationChanged(configuration: ExternalGraphqlPlaygroundConfiguration) {
     this.init(configuration);
   }
+  
+  /**
+   * An event is emitted when a query is aborted, with the initialized request data as the payload.
+   */
+  @Event() abortQuery: EventEmitter<RequestInit>;
   
   /**
    * Updates the language used in the GraphiQL component.
@@ -87,7 +93,10 @@ export class GraphqlPlaygroundComponent {
     );
   }
   
-  private init(configuration: ExternalGraphqlPlaygroundConfiguration) {
+  private init(externalConfiguration: ExternalGraphqlPlaygroundConfiguration) {
+    const configuration = new InternalGraphqlPlaygroundConfiguration(externalConfiguration);
+    configuration.onAbortQuery = (request: RequestInit) => this.abortQuery.emit(request);
+    
     const containerEl = document.querySelector('graphql-playground-component #graphiql');
     if (!containerEl) {
       console.error('Container element not found');
