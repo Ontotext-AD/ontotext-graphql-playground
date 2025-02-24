@@ -33,6 +33,10 @@ export default class PlaygroundEditorSteps {
     cy.wait(delay);
     return PlaygroundEditorSteps.getExecuteButton().click();
   }
+  
+  static abortQuery(): void {
+    PlaygroundEditorSteps.getExecuteButton().click();
+  }
 
   static getResponse(): Cypress.Chainable {
     return cy.get('.graphiql-response');
