@@ -4,17 +4,19 @@
 SOURCE_FILES=(
   "../node_modules/react/umd/react.development.js"
   "../node_modules/react-dom/umd/react-dom.development.js"
-  "../../graphiql/packages/graphiql/graphiql.min.js"
-  "../../graphiql/packages/graphiql/graphiql.min.css"
-  "../../graphiql/packages/graphiql-plugin-explorer/dist/index.umd.js"
+  "../../graphiql/packages/graphiql/dist/index.umd.js"
+  "../../graphiql/packages/graphiql/dist/style.css"
+  "../../graphiql/packages/graphiql-plugin-explorer/dist/index.js"
   "../../graphiql/packages/graphiql-plugin-explorer/dist/style.css"
 )
 DEST_DIR="../src/components/assets"
 
 # Define a rename map for specific files
 declare -A RENAME_MAP=(
-  ["../../graphiql/packages/graphiql-plugin-explorer/dist/index.umd.js"]="explorer.index.umd.js"
+  ["../../graphiql/packages/graphiql-plugin-explorer/dist/index.js"]="explorer.index.js"
   ["../../graphiql/packages/graphiql-plugin-explorer/dist/style.css"]="explorer.style.css"
+  ["../../graphiql/packages/graphiql/dist/index.umd.js"]="graphiql.min.js"
+  ["../../graphiql/packages/graphiql/dist/style.css"]="graphiql.min.css"
 )
 
 echo "Cleaning up destination directory: $DEST_DIR"

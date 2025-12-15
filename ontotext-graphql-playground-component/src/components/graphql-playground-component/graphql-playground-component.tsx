@@ -59,7 +59,6 @@ export class GraphqlPlaygroundComponent {
       await ResourceUtil.loadJavaScript(getAssetPath(`${basePath}react.development.js`));
       await ResourceUtil.loadJavaScript(getAssetPath(`${basePath}react-dom.development.js`));
       await ResourceUtil.loadJavaScript(getAssetPath(`${basePath}graphiql.min.js`));
-      await ResourceUtil.loadJavaScript(getAssetPath(`${basePath}explorer.index.umd.js`));
       
       await ResourceUtil.loadCss(getAssetPath(`${basePath}graphiql.min.css`));
       await ResourceUtil.loadCss(getAssetPath(`${basePath}explorer.style.css`));
@@ -115,5 +114,6 @@ export class GraphqlPlaygroundComponent {
     this.reactRoot.render(
       window.React.createElement(window.GraphiQL, this.graphiQlConfiguration),
     );
+    
   }
 }

@@ -16,7 +16,7 @@
     "jsx": "react",
     "jsxFactory": "h",
     "paths": {
-      "@graphiql": ["../graphiql/packages/graphiql/esm/index.d.ts"],
+      "@graphiql": ["../graphiql/packages/graphiql/dist/index.d.ts"],
       "@fetcher": ["../graphiql/packages/graphiql-toolkit/dist/esm/create-fetcher/types.d.mts"]
     }
   },

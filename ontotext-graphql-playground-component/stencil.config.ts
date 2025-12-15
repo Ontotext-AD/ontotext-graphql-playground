@@ -54,13 +54,6 @@ export const config: Config = {
   testing: {
     browserHeadless: "new",
   },
-  rollupPlugins: {
-    before: [
-      // This will run before Stencil's internal Rollup plugins
-      nodeResolve(),
-      commonjs(),
-    ],
-  },
   plugins: [sass()],
   devServer: {
     requestListenerPath: path

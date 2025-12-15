@@ -1,4 +1,5 @@
 import {GraphiQLProps} from '@graphiql';
+import {explorerPlugin} from '../components/assets/explorer.index.js';
 import {FetcherConfigurationMapper} from './fetcher-configuration.mapper';
 import {InternalGraphqlPlaygroundConfiguration} from '../models/internal-graphql-playground-configuration';
 
@@ -21,7 +22,9 @@ export class GraphiqlConfigurationMapper {
       defaultQuery: configuration.defaultQuery,
       translations: configuration.translations,
       fetcher: window.GraphiQL.createFetcher(FetcherConfigurationMapper.toFetcherConfiguration(configuration)),
-      plugins: [window.GraphiQLPluginExplorer.explorerPlugin()]
+      plugins: [
+        explorerPlugin()
+      ]
     };
   }
 }
