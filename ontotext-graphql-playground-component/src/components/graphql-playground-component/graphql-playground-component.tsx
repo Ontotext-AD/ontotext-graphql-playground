@@ -53,6 +53,25 @@ export class GraphqlPlaygroundComponent {
     return Promise.resolve();
   }
   
+  /**
+   * Sets the CodeMirror theme for all GraphiQL editor instances.
+   *
+   * Updates the editor theme in the current GraphiQL configuration and
+   * re-renders GraphiQL to apply the new theme.
+   *
+   * @param editorsThemeName - Name of the CodeMirror theme to apply.
+   * Defaults to `"graphiql"` if not provided.
+   * @returns A resolved promise once the theme is applied.
+   */
+  @Method()
+  setEditorsTheme(editorsThemeName = 'grapihql'): Promise<void> {
+    if (this.graphiQlConfiguration) {
+      this.graphiQlConfiguration.editorTheme = editorsThemeName;
+      this.renderGraphiQL();
+    }
+    return Promise.resolve();
+  }
+  
   async componentWillLoad(): Promise<void> {
     const basePath = './assets/';
     try {

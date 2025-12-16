@@ -21,6 +21,22 @@
 
 ## Methods
 
+### `setEditorsTheme(editorsThemeName?: string) => Promise<void>`
+
+
+
+#### Parameters
+
+| Name               | Type     | Description |
+| ------------------ | -------- | ----------- |
+| `editorsThemeName` | `string` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `setLanguage(newLanguage: string) => Promise<void>`
 
 Updates the language used in the GraphiQL component.

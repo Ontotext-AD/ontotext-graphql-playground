@@ -41,4 +41,40 @@ export default class PlaygroundEditorSteps {
   static getResponse(): Cypress.Chainable {
     return cy.get('.graphiql-response');
   }
+  
+  static getResponseCodeMirror(): Cypress.Chainable {
+    return PlaygroundEditorSteps.getResponse().find('.CodeMirror');
+  }
+  
+  static getGraphiqlEditors(): Cypress.Chainable {
+    return cy.get('.graphiql-editors');
+  }
+  
+  static getGraphiqlEditorsCodeMirror(): Cypress.Chainable {
+    return PlaygroundEditorSteps.getGraphiqlEditors().find('.CodeMirror');
+  }
+  
+  static getGraphiqlEditorTools(): Cypress.Chainable {
+    return cy.get('.graphiql-editor-tools');
+  }
+  
+  static getVariablesBtn(): Cypress.Chainable {
+    return PlaygroundEditorSteps.getGraphiqlEditorTools().find('button[data-name="variables"]');
+  }
+  
+  static openVariables(): void {
+    PlaygroundEditorSteps.getVariablesBtn().click();
+  }
+  
+  static getHeadersBtn(): Cypress.Chainable {
+    return PlaygroundEditorSteps.getGraphiqlEditorTools().find('button[data-name="headers"]');
+  }
+  
+  static openHeaders(): void {
+    PlaygroundEditorSteps.getHeadersBtn().click();
+  }
+  
+  static getActiveGraphiqlEditorToolCodeMirror(): Cypress.Chainable {
+    return PlaygroundEditorSteps.getGraphiqlEditorTools().find('.graphiql-editor:not(.hidden) .CodeMirror');
+  }
 }

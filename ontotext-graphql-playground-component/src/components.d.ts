@@ -10,6 +10,7 @@ export { ExternalGraphqlPlaygroundConfiguration } from "./models/external-graphq
 export namespace Components {
     interface GraphqlPlaygroundComponent {
         "configuration": ExternalGraphqlPlaygroundConfiguration;
+        "setEditorsTheme": (editorsThemeName?: string) => Promise<void>;
         /**
           * Updates the language used in the GraphiQL component.
           * @param newLanguage - The new language to be set for the GraphiQL component. If not provided, it defaults to 'en'.
