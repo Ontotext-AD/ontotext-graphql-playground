@@ -18,6 +18,7 @@ export class GraphiqlConfigurationMapper {
     return {
       defaultEditorToolsVisibility: false,
       selectedLanguage: configuration.selectedLanguage,
+      editorTheme: configuration.editorsThemeName,
       defaultQuery: configuration.defaultQuery,
       translations: configuration.translations,
       fetcher: window.GraphiQL.createFetcher(FetcherConfigurationMapper.toFetcherConfiguration(configuration)),

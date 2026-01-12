@@ -13,12 +13,19 @@ export class InternalGraphqlPlaygroundConfiguration {
    * - If provided as a function (`() => Record<string, string>`), the function will be called to generate the headers dynamically.
    */
   headers: Record<string, string> | (() => Record<string, string>);
-  
+
   /**
    * Determines the language that has to be used. If none is provided, the default ('en') will be used.
    */
   selectedLanguage?: string;
-  
+
+  /**
+   * Name of the CodeMirror theme applied to all GraphiQL editor instances.
+   *
+   * If this property is not provided, the default `"graphiql"` theme is used.
+   */
+  editorsThemeName?: string;
+
   /**
    * Represents a collection of translations for multiple languages,
    * using a flat structure with dot-separated keys or nested objects.
@@ -46,24 +53,25 @@ export class InternalGraphqlPlaygroundConfiguration {
    * ```
    */
   translations?: Translations;
-  
+
   /**
    * The default query that will be used when a new tab is added.
    */
   defaultQuery: string;
-  
+
   /**
    * Callback function invoked when a query is aborted.
    *
    * @param response - The initialized request data associated with the aborted query.
    */
   onAbortQuery?: (response: RequestInit) => void;
-  
+
   constructor(externalConfiguration: ExternalGraphqlPlaygroundConfiguration) {
     this.endpoint = externalConfiguration.endpoint;
     this.headers = externalConfiguration.headers;
     this.selectedLanguage = externalConfiguration.selectedLanguage || 'en';
     this.translations = externalConfiguration.translations;
     this.defaultQuery = externalConfiguration.defaultQuery || ' ';
+    this.editorsThemeName = externalConfiguration.editorsThemeName;
   }
 }

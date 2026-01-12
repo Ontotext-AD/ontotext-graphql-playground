@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Stencil Component Starter</title>
+    <script type="module" src="/build/ontotext-graphql-playground-component.esm.js"></script>
+    <script nomodule src="/build/ontotext-graphql-playground-component.js"></script>
+
+    <script src="./themes/main.js"></script>
+    <link rel="stylesheet" href="../themes/oceanic-next.css" />
+    <link rel="stylesheet" href="./themes/dracula.css" />
+    <script src="./main.js"></script>
+  </head>
+  <body>
+    <a href="/">Back</a>
+    <hr />
+    <button id="configureOceanicNextTheme" onclick="configureOceanicNextTheme()">Configure oceanic-next Theme</button>
+    <button id="configureWithoutTheme" onclick="configureWithoutTheme()">Configure without theme</button>
+    <button id="setDraculaTheme" onclick="setDraculaTheme()">Set dracula Theme</button>
+    <button id="setDefaultTheme" onclick="setDefaultTheme()">Set default Theme</button>
+    <div class="content">
+      <graphql-playground-component></graphql-playground-component>
+    </div>
+  </body>
+</html>

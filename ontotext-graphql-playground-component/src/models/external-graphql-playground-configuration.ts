@@ -18,6 +18,13 @@ export class ExternalGraphqlPlaygroundConfiguration {
   selectedLanguage?: string;
   
   /**
+   * Name of the CodeMirror theme applied to all GraphiQL editor instances.
+   *
+   * If this property is not provided, the default `"graphiql"` theme is used.
+   */
+  editorsThemeName?: string;
+  
+  /**
    * Represents a collection of translations for multiple languages,
    * using a flat structure with dot-separated keys or nested objects.
    *
