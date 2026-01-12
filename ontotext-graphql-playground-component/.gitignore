@@ -26,3 +26,5 @@ UserInterfaceState.xcuserstate
 .env
 /generated/
 /src/components/assets/
+
+/cypress/screenshots/

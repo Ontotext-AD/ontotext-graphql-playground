@@ -3,7 +3,9 @@ import {ExternalGraphqlPlaygroundConfiguration} from "../../models/external-grap
 import {GraphiQLProps} from '@graphiql';
 import {ResourceUtil} from '../../utils/resource-util';
 import {GraphiqlConfigurationMapper} from '../../mappers/graphiql-configuration.mapper';
-import {InternalGraphqlPlaygroundConfiguration} from '../../models/internal-graphql-playground-configuration';
+import {
+  InternalGraphqlPlaygroundConfiguration
+} from '../../models/internal-graphql-playground-configuration';
 
 @Component({
   tag: 'graphql-playground-component',
@@ -14,7 +16,7 @@ import {InternalGraphqlPlaygroundConfiguration} from '../../models/internal-grap
 export class GraphqlPlaygroundComponent {
   // React root instance must be created only once and reused
   private reactRoot: any;
-  
+
   /**
    * React determines whether a component should re-render by checking references for equality.
    * This property holds a reference to the entire configuration when GraphiQL is first created.
@@ -24,19 +26,19 @@ export class GraphqlPlaygroundComponent {
    * the language works.
    */
   private graphiQlConfiguration: GraphiQLProps;
-  
+
   @Prop() configuration: ExternalGraphqlPlaygroundConfiguration;
-  
+
   @Watch('configuration')
   configurationChanged(configuration: ExternalGraphqlPlaygroundConfiguration) {
     this.init(configuration);
   }
-  
+
   /**
    * An event is emitted when a query is aborted, with the initialized request data as the payload.
    */
   @Event() abortQuery: EventEmitter<RequestInit>;
-  
+
   /**
    * Updates the language used in the GraphiQL component.
    *
@@ -52,7 +54,26 @@ export class GraphqlPlaygroundComponent {
     }
     return Promise.resolve();
   }
-  
+
+  /**
+   * Sets the CodeMirror theme for all GraphiQL editor instances.
+   *
+   * Updates the editor theme in the current GraphiQL configuration and
+   * re-renders GraphiQL to apply the new theme.
+   *
+   * @param editorsThemeName - Name of the CodeMirror theme to apply.
+   * Defaults to `"graphiql"` if not provided.
+   * @returns A resolved promise once the theme is applied.
+   */
+  @Method()
+  setEditorsTheme(editorsThemeName = 'graphiql'): Promise<void> {
+    if (this.graphiQlConfiguration) {
+      this.graphiQlConfiguration.editorTheme = editorsThemeName;
+      this.renderGraphiQL();
+    }
+    return Promise.resolve();
+  }
+
   async componentWillLoad(): Promise<void> {
     const basePath = './assets/';
     try {
@@ -60,14 +81,14 @@ export class GraphqlPlaygroundComponent {
       await ResourceUtil.loadJavaScript(getAssetPath(`${basePath}react-dom.development.js`));
       await ResourceUtil.loadJavaScript(getAssetPath(`${basePath}graphiql.min.js`));
       await ResourceUtil.loadJavaScript(getAssetPath(`${basePath}explorer.index.umd.js`));
-      
+
       await ResourceUtil.loadCss(getAssetPath(`${basePath}graphiql.min.css`));
       await ResourceUtil.loadCss(getAssetPath(`${basePath}explorer.style.css`));
     } catch (error) {
       console.error('Error loading assets:', error);
     }
   }
-  
+
   componentDidLoad(): void {
     setTimeout(() => {
       if (this.configuration) {
@@ -77,14 +98,14 @@ export class GraphqlPlaygroundComponent {
       }
     }, 500);
   }
-  
+
   disconnectedCallback() {
     if (this.reactRoot) {
       this.reactRoot.unmount();
       this.reactRoot = null;
     }
   }
-  
+
   render(): JSX.Element {
     return (
       <Host>
@@ -92,11 +113,11 @@ export class GraphqlPlaygroundComponent {
       </Host>
     );
   }
-  
+
   private init(externalConfiguration: ExternalGraphqlPlaygroundConfiguration) {
     const configuration = new InternalGraphqlPlaygroundConfiguration(externalConfiguration);
     configuration.onAbortQuery = (request: RequestInit) => this.abortQuery.emit(request);
-    
+
     const containerEl = document.querySelector('graphql-playground-component #graphiql');
     if (!containerEl) {
       console.error('Container element not found');
@@ -106,11 +127,11 @@ export class GraphqlPlaygroundComponent {
       // Create the root only once
       this.reactRoot = window.ReactDOM.createRoot(containerEl);
     }
-    
+
     this.graphiQlConfiguration = GraphiqlConfigurationMapper.toGraphiQLConfiguration(configuration);
     this.renderGraphiQL();
   }
-  
+
   private renderGraphiQL(): void {
     this.reactRoot.render(
       window.React.createElement(window.GraphiQL, this.graphiQlConfiguration),

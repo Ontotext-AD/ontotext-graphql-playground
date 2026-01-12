@@ -11,6 +11,12 @@ export namespace Components {
     interface GraphqlPlaygroundComponent {
         "configuration": ExternalGraphqlPlaygroundConfiguration;
         /**
+          * Sets the CodeMirror theme for all GraphiQL editor instances.  Updates the editor theme in the current GraphiQL configuration and re-renders GraphiQL to apply the new theme.
+          * @param editorsThemeName - Name of the CodeMirror theme to apply. Defaults to `"graphiql"` if not provided.
+          * @returns A resolved promise once the theme is applied.
+         */
+        "setEditorsTheme": (editorsThemeName?: string) => Promise<void>;
+        /**
           * Updates the language used in the GraphiQL component.
           * @param newLanguage - The new language to be set for the GraphiQL component. If not provided, it defaults to 'en'.
           * @returns A promise that resolves when the language is updated.

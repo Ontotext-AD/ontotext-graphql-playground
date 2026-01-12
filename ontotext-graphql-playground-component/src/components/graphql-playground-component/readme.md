@@ -21,6 +21,25 @@
 
 ## Methods
 
+### `setEditorsTheme(editorsThemeName?: string) => Promise<void>`
+
+Sets the CodeMirror theme for all GraphiQL editor instances.
+
+Updates the editor theme in the current GraphiQL configuration and
+re-renders GraphiQL to apply the new theme.
+
+#### Parameters
+
+| Name               | Type     | Description                                                                        |
+| ------------------ | -------- | ---------------------------------------------------------------------------------- |
+| `editorsThemeName` | `string` | - Name of the CodeMirror theme to apply. Defaults to `"graphiql"` if not provided. |
+
+#### Returns
+
+Type: `Promise<void>`
+
+A resolved promise once the theme is applied.
+
 ### `setLanguage(newLanguage: string) => Promise<void>`
 
 Updates the language used in the GraphiQL component.
